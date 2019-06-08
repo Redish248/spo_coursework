@@ -1,0 +1,3 @@
+echo "Forth interpreter by Irina Redkina"
+cat part3.frt - | ./bin/main
+
