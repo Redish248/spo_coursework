@@ -1,42 +1,3 @@
-native 'buf', buf
-	push qword user_buf
-	jmp next
-
-native 'read_word', read_word
-  pop rdi
-  call read_word
-  push rdx
-  jmp next
-
-native 'drop', drop
-  add rsp, 8
-  jmp next
-
-native 'print_str', print_str
-  pop rdi
-  call print_string
-  jmp next
-
-native 'print_newline', print_newline
-  call print_newline
-  jmp next
-
-native '.', dot
-  pop rdi
-  call print_int
-  jmp next
-
-native 'compare', compare
-  pop rdi
-  pop rsi
-  call string_equals
-  push rax
-  jmp next
-
-native 'dup', dup
-  push qword [rsp]
-  jmp next
-
 native '+', plus
   pop rdx
   pop rax
@@ -44,7 +5,7 @@ native '+', plus
   push rax
   jmp next
 
-native '-', minus
+native '-', minuse
   pop rdx
   pop rax
   sub rax, rdx
@@ -74,26 +35,6 @@ native '<', less
   movzx rax, al
   push rax
   jmp next
-
-native 'swap', swap
-  pop rdx
-  pop rax
-  push rdx
-  push rax
-  jmp next
-
-native '.S', show_stack
-  mov rcx, rsp
-  .loop:
-    cmp rcx, [stack_start]
-    jae next
-    mov rdi, [rcx]
-    push rcx
-    call print_int
-    call print_newline
-    pop rcx
-    add rcx, 8
-    jmp .loop
 
 native '=', equals
   pop rdx
@@ -141,25 +82,6 @@ native 'not', not
     mov rax, 1
     push rax
     jmp next
-
-native 'rot', rot
-  pop rax
-  pop rdx
-  pop rcx
-  push rdx
-  push rax
-  push rcx
-  jmp next
-
-native 'read_char', read_char
-  call read_char
-  push rax
-  jmp next
-
-native 'print_char', print_char
-  pop rdi
-  call print_char
-  jmp next
 
 native '!', val_by_addr
   pop rax
@@ -221,6 +143,84 @@ native "land", land
   .no:
     push rax
     jmp next
+
+native 'buf', buf
+	push qword user_buf
+	jmp next
+
+native 'read_word', read_word
+  pop rdi
+  call read_word
+  push rdx
+  jmp next
+
+native 'drop', drop
+  add rsp, 8
+  jmp next
+
+native 'print_str', print_str
+  pop rdi
+  call print_string
+  jmp next
+
+native 'print_newline', print_newline
+  call print_newline
+  jmp next
+
+native '.', dot
+  pop rdi
+  call print_int
+  jmp next
+
+native 'compare', compare
+  pop rdi
+  pop rsi
+  call string_equals
+  push rax
+  jmp next
+
+native 'dup', dup
+  push qword [rsp]
+  jmp next
+
+native 'swap', swap
+  pop rdx
+  pop rax
+  push rdx
+  push rax
+  jmp next
+
+native '.S', show_stack
+  mov rcx, rsp
+  .loop:
+    cmp rcx, [stack_start]
+    jae next
+    mov rdi, [rcx]
+    push rcx
+    call print_int
+    call print_newline
+    pop rcx
+    add rcx, 8
+    jmp .loop
+
+native 'rot', rot
+  pop rax
+  pop rdx
+  pop rcx
+  push rdx
+  push rax
+  push rcx
+  jmp next
+
+native 'read_char', read_char
+  call read_char
+  push rax
+  jmp next
+
+native 'print_char', print_char
+  pop rdi
+  call print_char
+  jmp next
 
 native 'find', find
   pop rdi          
@@ -430,6 +430,5 @@ native "syscall", syscall
   push rax
   push rdx
   jmp next
-
 
 
